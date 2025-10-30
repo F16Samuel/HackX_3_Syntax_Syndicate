@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     # App
     DEFAULT_PROMPT_BUDGET: int = 15
-    FRONTEND_URL: str = "http://localhost:5173"
+    FRONTEND_URL: str = "http://localhost:8080"
 
 
 settings = Settings()

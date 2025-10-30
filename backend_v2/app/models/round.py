@@ -26,7 +26,7 @@ class RoundInDB(RoundBase):
     It inherits the base fields and adds our standard PyObjectId.
     """
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-
+    user_id: PyObjectId
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,

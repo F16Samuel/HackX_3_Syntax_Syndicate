@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { FiRadio, FiFilter } from "react-icons/fi";
 import axios from "axios";
+import { api } from '../lib/axios';
 
 const DashBoard_body = () => {
   const [rounds, setRounds] = useState([]);
@@ -58,14 +59,15 @@ const DashBoard_body = () => {
 
   const fetchRounds = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/user/rounds");
-      setRounds(res.data || []);
-      setError(null);
+      // Using the api instance to make the GET request
+      const res = await api.get("/api/v1/user/rounds");
+      setRounds(res.data || []); // Set rounds data if the request is successful
+      setError(null); // Clear any previous errors
     } catch (err) {
       console.error("Error fetching rounds:", err);
-      setError("Unable to fetch rounds. Please try again later.");
+      setError("Unable to fetch rounds. Please try again later."); // Set an error message if something goes wrong
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading to false once the request is completed
     }
   };
   
