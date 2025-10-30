@@ -1,0 +1,14 @@
+﻿fastapi
+uvicorn[standard]
+motor
+pydantic-settings
+passlib[bcrypt]
+python-jose[cryptography]
+pymongo
+python-dotenv
+email-validator
+
+# Testing
+pytest
+pytest-asyncio
+httpx
