@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import WelcomeLeft from "../Components/WelcomeLeft";
+import WelcomeLeft from "../components/WelcomeLeft";
 
 const Welcome = ({ onContinue }) => {
   const rightSectionRef = useRef(null);
