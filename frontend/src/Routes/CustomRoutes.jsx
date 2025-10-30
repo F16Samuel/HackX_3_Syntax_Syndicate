@@ -3,6 +3,7 @@ import Home from "@/Pages/Home"; // <-- MODIFIED PATH
 import Login from "@/Pages/Login"; // <-- MODIFIED PATH
 import SignUp from "@/Pages/SignUp"; // <-- MODIFIED PATH
 import StudentDashboard from "@/Pages/StudentDashboard"; // <-- MODIFIED PATH
+import Welcome from "../Pages/Welcome";
 
 
 function CustomRoutes() {
@@ -13,6 +14,7 @@ function CustomRoutes() {
             <Route path="/login" element={<Login/>} />
             <Route path="/signUp" element={<SignUp/>} />
             <Route path="/candidate" element={<StudentDashboard/>} />
+            <Route path="/exam" element={<Welcome/>} />
         </Routes>
     );
 };

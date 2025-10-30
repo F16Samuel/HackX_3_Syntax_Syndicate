@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { FiRadio, FiFilter, FiClock } from "react-icons/fi";
 import { api } from '@/lib/axios';
+import { Link } from "react-router-dom";
 
 // Define filter categories
 const CATEGORY_FILTERS = ["All", "Aptitude Round", "DSA Round", "Interview"];
@@ -198,15 +199,17 @@ const DashBoard_body = () => {
               </div>
 
               <div className="flex gap-3 mt-4 sm:mt-0 sm:ml-auto">
-              <button
-                className="px-5 py-3 rounded-lg text-white font-medium 
-                bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] 
-                shadow-[0_0_20px_rgba(255,107,0,0.6)] 
-                hover:shadow-[0_0_35px_rgba(255,0,106,0.8)] 
-                transition-all duration-300 border border-white/10"
-              >
-                Start Exam
-              </button>
+              <Link>
+                <button
+                  className="px-5 py-3 rounded-lg text-white font-medium 
+                  bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] 
+                  shadow-[0_0_20px_rgba(255,107,0,0.6)] 
+                  hover:shadow-[0_0_35px_rgba(255,0,106,0.8)] 
+                  transition-all duration-300 border border-white/10"
+                >
+                  Start Exam
+                </button>
+              </Link>
               </div>
             </div>
           ))
