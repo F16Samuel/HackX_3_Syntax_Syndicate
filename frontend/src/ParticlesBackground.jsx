@@ -19,6 +19,7 @@ const ParticlesBackground = () => {
       star.style.top = `${y}px`;
       star.style.width = `${size}px`;
       star.style.height = `${size}px`;
+      starfield.style.pointerEvents = "none";
       star.style.transform = `translateZ(${depth}px)`;
 
       starfield.appendChild(star);

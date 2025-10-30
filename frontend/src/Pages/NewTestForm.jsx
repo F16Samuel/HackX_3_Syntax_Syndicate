@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../utils/placeholderData'
+import { api } from '../lib/placeholderData'
+import Navbar from '@/components/navbar'
+
 
 const QUESTION_TYPES = [
   'Data Structures & Algorithms',
@@ -100,29 +102,30 @@ function NewTestForm() {
 
   const validateForm = () => {
     if (!formData.title.trim()) {
-      alert('Please enter a test title')
+      alert('Please enter a test title') // Note: alert() might not work in iframe
       return false
     }
     if (!formData.promptBudget || parseFloat(formData.promptBudget) <= 0) {
-      alert('Please enter a valid prompt budget')
+      alert('Please enter a valid prompt budget') // Note: alert() might not work in iframe
       return false
     }
     const totalWeight = Object.values(formData.rubrics).reduce((sum, val) => sum + val, 0)
     if (Math.abs(totalWeight - 1) > 0.01) {
-      alert('Rubric weightages must sum to 1')
+      alert('Rubric weightages must sum to 1') // Note: alert() might not work in iframe
       return false
     }
     if (formData.questions.some(q => !q.question.trim())) {
-      alert('Please fill in all questions')
+      alert('Please fill in all questions') // Note: alert() might not work in iframe
       return false
     }
     if (formData.candidateIds.length === 0) {
-      alert('Please select at least one candidate')
+      alert('Please select at least one candidate') // Note: alert() might not work in iframe
       return false
     }
     return true
   }
 
+  // This is a form submission, so preventDefault IS correct here.
   const handleSubmit = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -141,7 +144,7 @@ function NewTestForm() {
       navigate(`/test/${newTest.id}`)
     } catch (error) {
       console.error('Error creating test:', error)
-      alert('Failed to create test. Please try again.')
+      alert('Failed to create test. Please try again.') // Note: alert() might not work in iframe
     } finally {
       setLoading(false)
     }
@@ -151,14 +154,11 @@ function NewTestForm() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-4xl mx-auto">
+      <Navbar/>
+      <div className="max-w-4xl mx-auto pt-24">
         <div className="flex items-center mb-8">
           <button
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              navigate('/')
-            }}
+            onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
             className="mr-4 text-gray-400 hover:text-white"
           >
             ← Back
@@ -250,11 +250,7 @@ function NewTestForm() {
               <label className="block text-lg font-semibold">Questions</label>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  addQuestion()
-                }}
+                onClick={addQuestion} // <-- FIX: Simplified
                 className="px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
                 style={{
                   cursor: 'pointer',
@@ -275,11 +271,7 @@ function NewTestForm() {
                     {formData.questions.length > 1 && (
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          removeQuestion(question.id)
-                        }}
+                        onClick={() => removeQuestion(question.id)} // <-- FIX: Simplified
                         className="text-red-400 hover:text-red-300 text-sm"
                       >
                         Remove
@@ -359,11 +351,7 @@ function NewTestForm() {
           <div className="flex justify-end space-x-4">
             <button
               type="button"
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                navigate('/')
-              }}
+              onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
               className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
               style={{
                 cursor: 'pointer',
@@ -396,5 +384,3 @@ function NewTestForm() {
 }
 
 export default NewTestForm
-
-

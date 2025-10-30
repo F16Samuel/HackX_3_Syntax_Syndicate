@@ -5,6 +5,9 @@ import SignUp from "@/Pages/SignUp"; // <-- MODIFIED PATH
 import StudentDashboard from "@/Pages/StudentDashboard"; // <-- MODIFIED PATH
 import Welcome from "../Pages/Welcome";
 import StudentDashboardDummy from "@/Pages/StudentDashboardDummy"; // <-- MODIFIED PATH
+import RecruiterDashboardDummy from "@/Pages/Dashboard"; // <-- MODIFIED PATH
+import NewTestForm from "@/Pages/NewTestForm"; // <-- MODIFIED PATH
+import TestTakingDummy from "@/Pages/TestResults"; // <-- MODIFIED PATH
 
 
 function CustomRoutes() {
@@ -17,6 +20,9 @@ function CustomRoutes() {
             <Route path="/candidate" element={<StudentDashboard/>} />
             <Route path="/candidate-dummy" element={<StudentDashboardDummy/>} />
             <Route path="/exam" element={<Welcome/>} />
+            <Route path="/recruiter-dummy" element={<RecruiterDashboardDummy />} />
+            <Route path="/new-test" element={<NewTestForm />} />
+            <Route path="/test/:testId" element={<TestTakingDummy />} />
         </Routes>
     );
 };

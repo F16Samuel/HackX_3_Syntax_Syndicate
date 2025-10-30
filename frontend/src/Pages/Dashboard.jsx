@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../utils/placeholderData'
+import { api } from '../lib/placeholderData.js'
+import Navbar from '@/components/navbar'
 
-function Dashboard() {
+function RecruiterDashboardDummy() {
   const [tests, setTests] = useState([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
@@ -25,17 +26,14 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-7xl mx-auto">
+      <Navbar/>
+      <div className="max-w-7xl mx-auto pt-24">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff672f] to-[#ff4500] bg-clip-text text-transparent">
             Recruiter Dashboard
           </h1>
           <button
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              navigate('/new-test')
-            }}
+            onClick={() => navigate('/new-test')} // <-- FIX: Removed preventDefault/stopPropagation
             className="px-6 py-3 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg"
             style={{
               cursor: 'pointer',
@@ -57,11 +55,7 @@ function Dashboard() {
           <div className="text-center py-16">
             <div className="text-gray-400 text-lg mb-4">No tests created yet</div>
             <button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                navigate('/new-test')
-              }}
+              onClick={() => navigate('/new-test')} // <-- FIX: Removed preventDefault/stopPropagation
               className="px-6 py-3 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
               style={{
                 cursor: 'pointer',
@@ -79,11 +73,7 @@ function Dashboard() {
             {tests.map((test) => (
               <div
                 key={test.id}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  navigate(`/test/${test.id}`)
-                }}
+                onClick={() => navigate(`/test/${test.id}`)} // <-- FIX: Removed preventDefault/stopPropagation
                 className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 cursor-pointer hover:border-[#ff672f] transition-colors"
                 style={{
                   cursor: 'pointer',
@@ -109,6 +99,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
-
-
+export default RecruiterDashboardDummy

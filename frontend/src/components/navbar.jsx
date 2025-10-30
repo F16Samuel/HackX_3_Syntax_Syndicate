@@ -15,7 +15,7 @@ const Navbar = () => {
       {/* Nav Links - Right */}
       <div className="flex gap-8 text-gray-300 font-medium">
         <Link
-          to="/recruiter"
+          to="/recruiter-dummy"
           className="hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,80,40,0.6)] transition duration-300"
         >
           Recruiter Demo

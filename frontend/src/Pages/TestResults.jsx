@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { api, placeholderCandidates } from '../utils/placeholderData'
+import { api, placeholderCandidates } from '../lib/placeholderData.js' // <-- Corrected path
+import Navbar from '@/components/navbar' // <-- Corrected path
 
-function TestResults() {
+function TestTakingDummy() {
   const { testId } = useParams()
   const navigate = useNavigate()
   const [test, setTest] = useState(null)
@@ -57,11 +58,16 @@ function TestResults() {
       setTest((prev) => prev ? { ...prev, candidateIds: updatedCandidateIds } : null)
       setShowAddCandidatesModal(false)
       setSelectedCandidateIds([])
-      alert('Candidates added successfully!')
+      alert('Candidates added successfully!') // Note: alert() might not work in iframe
     } catch (error) {
       console.error('Error adding candidates:', error)
-      alert('Failed to add candidates. Please try again.')
+      alert('Failed to add candidates. Please try again.') // Note: alert() might not work in iframe
     }
+  }
+
+  const closeAddCandidateModal = () => {
+    setShowAddCandidatesModal(false)
+    setSelectedCandidateIds([])
   }
 
   if (loading) {
@@ -75,14 +81,11 @@ function TestResults() {
   if (!test) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
+        <Navbar/>
+        <div className="text-center pt-24">
           <div className="text-gray-400 mb-4">Test not found</div>
           <button
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              navigate('/')
-            }}
+            onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
             className="px-6 py-3 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
             style={{
               cursor: 'pointer',
@@ -105,11 +108,7 @@ function TestResults() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center">
             <button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                navigate('/')
-              }}
+              onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
               className="mr-4 text-gray-400 hover:text-white"
             >
               ← Back
@@ -125,11 +124,7 @@ function TestResults() {
           </div>
           <div className="flex space-x-3">
             <button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                setShowAddCandidatesModal(true)
-              }}
+              onClick={() => setShowAddCandidatesModal(true)} // <-- FIX: Simplified
               className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
               style={{
                 cursor: 'pointer',
@@ -141,11 +136,7 @@ function TestResults() {
               + Add Candidates
             </button>
             <button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                setShowEditModal(true)
-              }}
+              onClick={() => setShowEditModal(true)} // <-- FIX: Simplified
               className="px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
               style={{
                 cursor: 'pointer',
@@ -246,27 +237,22 @@ function TestResults() {
           <div 
             className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
             onClick={(e) => {
+              // This logic for closing modal on backdrop click is correct
               if (e.target === e.currentTarget) {
                 e.preventDefault()
                 e.stopPropagation()
-                setShowAddCandidatesModal(false)
-                setSelectedCandidateIds([])
+                closeAddCandidateModal()
               }
             }}
           >
             <div 
               className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()} // This is also correct to prevent modal closing when clicking inside
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-semibold">Add Candidates</h3>
                 <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setShowAddCandidatesModal(false)
-                    setSelectedCandidateIds([])
-                  }}
+                  onClick={closeAddCandidateModal} // <-- FIX: Simplified
                   className="text-gray-400 hover:text-white"
                 >
                   ✕
@@ -304,22 +290,13 @@ function TestResults() {
               )}
               <div className="flex justify-end space-x-3">
                 <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setShowAddCandidatesModal(false)
-                    setSelectedCandidateIds([])
-                  }}
+                  onClick={closeAddCandidateModal} // <-- FIX: Simplified
                   className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    handleAddCandidates()
-                  }}
+                  onClick={handleAddCandidates} // <-- FIX: Simplified
                   disabled={selectedCandidateIds.length === 0}
                   className="px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
@@ -342,6 +319,7 @@ function TestResults() {
           <div 
             className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
             onClick={(e) => {
+              // This logic is correct
               if (e.target === e.currentTarget) {
                 e.preventDefault()
                 e.stopPropagation()
@@ -351,16 +329,12 @@ function TestResults() {
           >
             <div 
               className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()} // This is correct
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-semibold">Edit Test</h3>
                 <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setShowEditModal(false)
-                  }}
+                  onClick={() => setShowEditModal(false)} // <-- FIX: Simplified
                   className="text-gray-400 hover:text-white"
                 >
                   ✕
@@ -370,11 +344,7 @@ function TestResults() {
                 Note: Edit functionality is a placeholder. Replace with actual edit form when backend is ready.
               </div>
               <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  setShowEditModal(false)
-                }}
+                onClick={() => setShowEditModal(false)} // <-- FIX: Simplified
                 className="w-full px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
                 style={{
                   cursor: 'pointer',
@@ -394,6 +364,5 @@ function TestResults() {
   )
 }
 
-export default TestResults
-
+export default TestTakingDummy
 
