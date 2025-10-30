@@ -1,0 +1,5 @@
+react-router-dom
+tailwindcss @tailwindcss/vite
+react-tsparticles 
+tsparticles
+tsparticles-slim
