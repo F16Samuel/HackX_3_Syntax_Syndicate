@@ -21,7 +21,7 @@ const Navbar = () => {
           Recruiter Demo
         </Link>
         <Link
-          to="/candidate"
+          to="/candidate-dummy"
           className="hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,80,40,0.6)] transition duration-300"
         >
           Candidate Demo
