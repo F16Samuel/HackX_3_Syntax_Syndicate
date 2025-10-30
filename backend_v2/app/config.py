@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     # App
     DEFAULT_PROMPT_BUDGET: int = 15
-    FRONTEND_URL: str = "http://localhost:8080"
+    FRONTEND_URL: str = "https://advent-hackx.vercel.app/"
 
 
 settings = Settings()
