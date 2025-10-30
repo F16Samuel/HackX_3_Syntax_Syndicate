@@ -199,7 +199,7 @@ const DashBoard_body = () => {
               </div>
 
               <div className="flex gap-3 mt-4 sm:mt-0 sm:ml-auto">
-              <Link>
+              <Link to='/exam'>
                 <button
                   className="px-5 py-3 rounded-lg text-white font-medium 
                   bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] 
