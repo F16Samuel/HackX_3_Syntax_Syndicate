@@ -1,5 +1,5 @@
-import Navbar from '@/components/Navbar';
-import DashBoard_body from "@/components/Student_DashBoard_body";
+import Navbar from '@/components/navbar';
+import DashBoard_body from "@/components/student_dashboard_body";
 const StudentDashboard =()=> {
     return(
       <div>

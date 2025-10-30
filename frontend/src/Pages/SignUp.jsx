@@ -2,7 +2,7 @@
 // Route: /signUp
 
 import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext"; // Adjusted path
 
