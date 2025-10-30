@@ -1,9 +1,42 @@
+// Page: SignUp
+// Route: /signUp
+
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Adjusted path
 
 const SignUp = () => {
   const [role, setRole] = useState("candidate"); // Default to candidate
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+    setIsLoading(true);
+
+    try {
+      await register(email, password, role);
+      setSuccess("Registration successful! Please log in.");
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (err) {
+      console.error("Registration failed:", err);
+      setError(err.response?.data?.detail || "An unexpected error occurred. Please try again.");
+      setIsLoading(false);
+    } 
+    // Don't set isLoading(false) on success, as we'll be navigating away
+  };
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
@@ -46,7 +79,7 @@ const SignUp = () => {
           </div>
 
           {/* Form */}
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Email */}
             <div>
               <label className="block text-gray-300 mb-1 text-sm">Email</label>
@@ -54,6 +87,9 @@ const SignUp = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff2e2e] text-white placeholder-gray-500 transition"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -66,15 +102,31 @@ const SignUp = () => {
                 type="password"
                 placeholder="Create a password"
                 className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff2e2e] text-white placeholder-gray-500 transition"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
+
+            {/* Error Message */}
+            {error && (
+              <p className="text-center text-red-400 text-sm">{error}</p>
+            )}
+
+            {/* Success Message */}
+            {success && (
+              <p className="text-center text-green-400 text-sm">{success}</p>
+            )}
 
             {/* Register button */}
             <button
               type="submit"
-              className="w-full py-2 mt-3 font-semibold rounded-lg bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] hover:shadow-[0_0_20px_rgba(255,80,40,0.6)] transition-transform duration-200 hover:scale-105"
+              className="w-full py-2 mt-3 font-semibold rounded-lg bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] hover:shadow-[0_0_20px_rgba(255,80,40,0.6)] transition-transform duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isLoading}
             >
-              Register as {role.charAt(0).toUpperCase() + role.slice(1)}
+              {isLoading
+                ? "Registering..."
+                : `Register as ${role.charAt(0).toUpperCase() + role.slice(1)}`}
             </button>
           </form>
 
@@ -95,3 +147,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
