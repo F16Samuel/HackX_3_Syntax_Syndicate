@@ -2,9 +2,9 @@
 // Route: /signUp
 
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Adjusted path
+import { useAuth } from "@/context/AuthContext"; // Adjusted path
 
 const SignUp = () => {
   const [role, setRole] = useState("candidate"); // Default to candidate

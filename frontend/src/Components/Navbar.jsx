@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../index.css"; // for the glow animation CSS (make sure this line exists if animation is in index.css)
+import "@/index.css"; // for the glow animation CSS (make sure this line exists if animation is in index.css)
 
 const Navbar = () => {
   return (

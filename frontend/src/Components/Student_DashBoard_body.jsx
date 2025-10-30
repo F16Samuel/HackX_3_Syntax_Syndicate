@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { FiRadio, FiFilter, FiClock } from "react-icons/fi";
-import { api } from '../lib/axios';
+import { api } from '@/lib/axios';
 
 // Define filter categories
 const CATEGORY_FILTERS = ["All", "Aptitude Round", "DSA Round", "Interview"];

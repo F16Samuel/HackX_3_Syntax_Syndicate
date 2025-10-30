@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "../Pages/Home";
-import Login from "../Pages/Login";
-import SignUp from "../Pages/SignUp";
-import StudentDashboard from "../Pages/StudentDashboard";
+import Home from "@/Pages/Home"; // <-- MODIFIED PATH
+import Login from "@/Pages/Login"; // <-- MODIFIED PATH
+import SignUp from "@/Pages/SignUp"; // <-- MODIFIED PATH
+import StudentDashboard from "@/Pages/StudentDashboard"; // <-- MODIFIED PATH
 
 
 function CustomRoutes() {
