@@ -12,3 +12,4 @@ email-validator
 pytest
 pytest-asyncio
 httpx
+python-multipart
