@@ -6,7 +6,7 @@ import uvicorn
 
 from app.config import settings
 from app.db import connect_to_mongo, close_mongo_connection
-from app.api.v1 import auth, recruiter, candidate
+from app.api.v1 import auth, recruiter, candidate, rounds
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -46,6 +46,7 @@ api_prefix = "/api/v1"
 app.include_router(auth.router, prefix=api_prefix)
 app.include_router(recruiter.router, prefix=api_prefix)
 app.include_router(candidate.router, prefix=api_prefix)
+app.include_router(rounds.router, prefix=api_prefix)
 
 @app.get("/", tags=["Health Check"])
 async def read_root():
