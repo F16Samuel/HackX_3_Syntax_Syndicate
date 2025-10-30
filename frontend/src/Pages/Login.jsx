@@ -24,7 +24,12 @@ const Login = () => {
     try {
       await login(email, password, role);
       // On successful login, navigate to a protected page
-      navigate("/candidate"); 
+      if (role === "recruiter") {
+        navigate("/recruiter");
+      }
+      else {
+        navigate("/candidate"); 
+      }
     } catch (err) {
       console.error("Login failed:", err);
       setError(err.response?.data?.detail || "An unexpected error occurred. Please try again.");

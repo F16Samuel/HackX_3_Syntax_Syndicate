@@ -1,82 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { FiRadio, FiFilter } from "react-icons/fi";
-import axios from "axios";
+import { FiRadio, FiFilter, FiClock } from "react-icons/fi";
 import { api } from '../lib/axios';
+
+// Define filter categories
+const CATEGORY_FILTERS = ["All", "Aptitude Round", "DSA Round", "Interview"];
+const STATUS_FILTERS = [
+  { key: "all", label: "All Status", icon: FiFilter },
+  { key: "live", label: "Live", icon: FiRadio },
+  { key: "upcoming", label: "Upcoming", icon: FiClock },
+];
 
 const DashBoard_body = () => {
   const [rounds, setRounds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // const fetchRounds = async () => {
-  //   try {
-  //     const res = await axios.get("http://127.0.0.1:8000/api/user/rounds");
-  //     setRounds(res.data);
-  //   } catch (err) {
-  //     console.error("Error fetching rounds:", err);
+  // --- NEW STATE FOR FILTERS ---
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState(CATEGORY_FILTERS[0]); // "All"
+  const [statusFilter, setStatusFilter] = useState(STATUS_FILTERS[0].key); // "all"
 
-  //     // 👇 fallback mock data to visualize UI
-  //     setRounds([
-  //       {
-  //         _id: "1",
-  //         title: "AI Code Contest",
-  //         subtitle: "Round 1: Problem Solving + Debugging",
-  //         thumbnailUrl: "https://picsum.photos/200/200?1",
-  //         displayStartDate: "Oct 31, 2025",
-  //         displayStartTime: "10:00 AM",
-  //         displayEndTime: "12:00 PM",
-  //         whoCanPlay: "Everyone",
-  //         role: "Participant",
-  //       },
-  //       {
-  //         _id: "2",
-  //         title: "Simulation Game",
-  //         subtitle: "HackX Challenge - Simulation Round",
-  //         thumbnailUrl: "https://picsum.photos/200/200?2",
-  //         displayStartDate: "Nov 1, 2025",
-  //         displayStartTime: "2:00 PM",
-  //         displayEndTime: "4:30 PM",
-  //         whoCanPlay: "Top 50 Teams",
-  //         role: "Team Lead",
-  //       },
-  //       {
-  //         _id: "3",
-  //         title: "Offline Round",
-  //         subtitle: "On-site presentation and demo",
-  //         thumbnailUrl: "https://picsum.photos/200/200?3",
-  //         displayStartDate: "Nov 2, 2025",
-  //         displayStartTime: "11:00 AM",
-  //         displayEndTime: "1:30 PM",
-  //         whoCanPlay: "Top 10 Teams",
-  //         role: "Presenter",
-  //       },
-  //     ]);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
+  // --- FETCH DATA ---
   const fetchRounds = async () => {
     try {
-      // Using the api instance to make the GET request
       const res = await api.get("/api/v1/user/rounds");
-      setRounds(res.data || []); // Set rounds data if the request is successful
-      setError(null); // Clear any previous errors
+      setRounds(res.data || []); 
+      setError(null);
     } catch (err) {
       console.error("Error fetching rounds:", err);
-      setError("Unable to fetch rounds. Please try again later."); // Set an error message if something goes wrong
+      setError("Unable to fetch rounds. Please try again later.");
     } finally {
-      setLoading(false); // Set loading to false once the request is completed
+      setLoading(false);
     }
   };
   
   useEffect(() => {
     fetchRounds();
-    const interval = setInterval(fetchRounds, 15000);
-    return () => clearInterval(interval);
+    // Optional: Refresh data periodically
+    // const interval = setInterval(fetchRounds, 15000); 
+    // return () => clearInterval(interval);
   }, []);
 
+  // --- FILTERING LOGIC ---
+  const filteredRounds = useMemo(() => {
+    const now = new Date();
+
+    return rounds.filter(round => {
+      // 1. Filter by Search Term (Title or Subtitle)
+      const searchMatch = 
+        round.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        round.subtitle.toLowerCase().includes(searchTerm.toLowerCase());
+
+      // 2. Filter by Category (Title or Subtitle)
+      const categoryMatch = 
+        categoryFilter === "All" ||
+        round.title.toLowerCase().includes(categoryFilter.toLowerCase()) ||
+        round.subtitle.toLowerCase().includes(categoryFilter.toLowerCase());
+
+      // 3. Filter by Status (Live, Upcoming)
+      let statusMatch = true;
+      if (statusFilter !== "all") {
+        try {
+          const startTime = new Date(round.startDateTime);
+          const endTime = new Date(round.endDateTime);
+
+          if (statusFilter === "live") {
+            statusMatch = now >= startTime && now <= endTime;
+          } else if (statusFilter === "upcoming") {
+            statusMatch = now < startTime;
+          }
+        } catch (e) {
+          console.error("Error parsing round dates:", e);
+          statusMatch = false; // Exclude if dates are invalid
+        }
+      }
+
+      // Return true only if all filters match
+      return searchMatch && categoryMatch && statusMatch;
+    });
+  }, [rounds, searchTerm, categoryFilter, statusFilter]);
+
+  // --- RENDER STATES ---
   if (loading) {
     return (
       <section className="min-h-screen flex items-center justify-center text-white text-lg tracking-wide relative z-10 pt-24">
@@ -97,6 +102,7 @@ const DashBoard_body = () => {
     );
   }
 
+  // --- MAIN RENDER ---
   return (
     <section className="min-h-screen w-full text-white px-8 py-10 backdrop-blur-sm relative z-10 pt-24">
       {/* Header */}
@@ -104,50 +110,68 @@ const DashBoard_body = () => {
         My Rounds
       </h1>
 
+      {/* Search Bar */}
+      <div className="mb-8 max-w-2xl mx-auto">
+        <input
+          type="text"
+          placeholder="Search for rounds by title or subtitle..."
+          className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       {/* Filters Row */}
-      <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
-        <div className="flex flex-wrap gap-3 text-sm">
-          {[
-            "All",
-            "Aptitude Round",
-            "DSA Round",
-            "Interview",
-          ].map((label) => (
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center sm:justify-start gap-3 text-sm">
+          {CATEGORY_FILTERS.map((label) => (
             <button
               key={label}
-              className="px-4 py-2 rounded-lg bg-white/10 border border-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
+              onClick={() => setCategoryFilter(label)}
+              className={`px-4 py-2 rounded-lg border border-white/10 transition-all duration-300 backdrop-blur-sm ${
+                categoryFilter === label
+                  ? "bg-gradient-to-r from-[#ff6b00] to-[#ff006a] text-white font-semibold shadow-[0_0_15px_rgba(255,80,40,0.5)]"
+                  : "bg-white/10 hover:bg-white/20"
+              }`}
             >
               {label}
             </button>
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 border border-white/10 transition-all duration-300">
-            <FiRadio /> Live
-          </button>
-          <button className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 border border-white/10 transition-all duration-300">
-            <FaRegCalendarAlt /> Upcoming
-          </button>
-          <button className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 border border-white/10 transition-all duration-300">
+        {/* Status Filters */}
+        <div className="flex items-center gap-3 text-sm">
+          {STATUS_FILTERS.map(status => {
+            const Icon = status.icon;
+            return (
+              <button
+                key={status.key}
+                onClick={() => setStatusFilter(status.key)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 transition-all duration-300 ${
+                  statusFilter === status.key
+                    ? "bg-white text-black font-semibold"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
+              >
+                <Icon className="w-4 h-4" /> 
+                {status.label}
+              </button>
+            )
+          })}
+          
+          {/* Sort By button - logic not implemented yet */}
+          <button className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg hover:bg-white/20 border border-white/10 transition-all duration-300 text-sm">
             <FiFilter /> Sort By
           </button>
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="mb-8">
-        <input
-          type="text"
-          placeholder="Search for rounds..."
-          className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 backdrop-blur-sm transition"
-        />
-      </div>
 
       {/* Rounds List */}
       <div className="space-y-6">
-        {rounds.length > 0 ? (
-          rounds.map((r) => (
+        {filteredRounds.length > 0 ? (
+          filteredRounds.map((r) => (
             <div
               key={r._id || r.title}
               className="flex flex-col sm:flex-row items-center sm:items-start bg-white/10 rounded-2xl border border-white/10 p-6 hover:bg-white/20 transition-all duration-300 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]"
@@ -156,14 +180,15 @@ const DashBoard_body = () => {
                 src={r.thumbnailUrl}
                 alt={r.title}
                 className="w-24 h-24 object-cover rounded-xl mb-4 sm:mb-0 sm:mr-6 border border-white/10"
+                onError={(e) => { e.target.src = "https://placehold.co/200x200/1a1a1a/ffffff?text=Image"; }} // Fallback
               />
 
               <div className="flex-1 w-full">
                 <h2 className="text-xl font-semibold mb-1">{r.title}</h2>
                 <p className="text-sm text-gray-300 mb-3">{r.subtitle}</p>
 
-                <div className="flex flex-wrap text-xs text-gray-400 gap-3">
-                  <span className="flex items-center gap-1">
+                <div className="flex flex-wrap text-xs text-gray-400 gap-x-3 gap-y-1">
+                  <span className="flex items-center gap-1.5">
                     <FaRegCalendarAlt /> {r.displayStartDate},{" "}
                     {r.displayStartTime} — {r.displayEndTime}
                   </span>
@@ -182,13 +207,14 @@ const DashBoard_body = () => {
               >
                 Start Exam
               </button>
-
-
               </div>
             </div>
           ))
         ) : (
-          <p className="text-gray-400 text-center">No rounds found</p>
+          <div className="text-gray-400 text-center py-10 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
+            <h3 className="text-lg font-semibold text-white mb-2">No Rounds Found</h3>
+            <p>Try adjusting your search or filter criteria.</p>
+          </div>
         )}
       </div>
     </section>
