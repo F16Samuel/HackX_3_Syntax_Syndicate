@@ -80,17 +80,16 @@ function TestTakingDummy() {
 
   if (!test) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="min-h-screen text-white flex items-center justify-center">
         <Navbar/>
         <div className="text-center pt-24">
           <div className="text-gray-400 mb-4">Test not found</div>
           <button
             onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
-            className="px-6 py-3 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+            className="px-6 py-3 rounded-lg text-white font-medium bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] shadow-[0_0_20px_rgba(255,0,106,0.5)] hover:shadow-[0_0_30px_rgba(255,0,106,0.8)] transition-all duration-300 border border-white/10"
             style={{
               cursor: 'pointer',
               pointerEvents: 'auto',
-              backgroundImage: 'linear-gradient(to right, #ff672f, #ff4500)',
               WebkitUserSelect: 'none',
               userSelect: 'none'
             }}
@@ -103,21 +102,22 @@ function TestTakingDummy() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen text-white">
+      <Navbar/>
+      <div className="w-full text-white px-8 py-10 pt-24 flex flex-col max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center">
             <button
               onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
-              className="mr-4 text-gray-400 hover:text-white"
+              className="mr-4 text-gray-300 hover:text-white"
             >
               ← Back
             </button>
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff672f] to-[#ff4500] bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] bg-clip-text text-transparent">
                 {test.title}
               </h1>
-              <div className="text-sm text-gray-400 mt-1">
+              <div className="text-sm text-gray-300 mt-1">
                 {test.candidateIds.length} candidate{test.candidateIds.length !== 1 ? 's' : ''} • {results.length} attempt{results.length !== 1 ? 's' : ''}
               </div>
             </div>
@@ -125,7 +125,7 @@ function TestTakingDummy() {
           <div className="flex space-x-3">
             <button
               onClick={() => setShowAddCandidatesModal(true)} // <-- FIX: Simplified
-              className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+              className="px-5 py-2 rounded-lg text-white font-medium bg-white/10 hover:bg-white/20 border border-white/10 transition-all duration-300"
               style={{
                 cursor: 'pointer',
                 pointerEvents: 'auto',
@@ -137,11 +137,10 @@ function TestTakingDummy() {
             </button>
             <button
               onClick={() => setShowEditModal(true)} // <-- FIX: Simplified
-              className="px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              className="px-5 py-2 rounded-lg text-white font-medium bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] shadow-[0_0_10px_rgba(255,0,106,0.4)] hover:shadow-[0_0_20px_rgba(255,0,106,0.7)] transition-all duration-300 border border-white/10"
               style={{
                 cursor: 'pointer',
                 pointerEvents: 'auto',
-                backgroundImage: 'linear-gradient(to right, #ff672f, #ff4500)',
                 WebkitUserSelect: 'none',
                 userSelect: 'none'
               }}
@@ -152,17 +151,17 @@ function TestTakingDummy() {
         </div>
 
         {/* Leaderboard */}
-        <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 mb-6">
+        <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] mb-6">
           <h2 className="text-2xl font-semibold mb-6">Leaderboard</h2>
           {results.length === 0 ? (
-            <div className="text-center py-8 text-gray-400">
+            <div className="text-gray-400 text-center py-10 bg-white/5 rounded-2xl border border-white/10">
               No submissions yet. Candidates will appear here once they complete the test.
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-700">
+                  <tr className="border-b border-white/20">
                     <th className="text-left py-3 px-4 text-gray-300 font-semibold">Rank</th>
                     <th className="text-left py-3 px-4 text-gray-300 font-semibold">Candidate</th>
                     <th className="text-left py-3 px-4 text-gray-300 font-semibold">Email</th>
@@ -172,7 +171,7 @@ function TestTakingDummy() {
                 </thead>
                 <tbody>
                   {sortedResults.map((result, index) => (
-                    <tr key={result.candidateId} className="border-b border-gray-800 hover:bg-gray-900 transition-colors">
+                    <tr key={result.candidateId} className="border-b border-white/10 hover:bg-white/10 transition-colors">
                       <td className="py-4 px-4">
                         <div className="flex items-center">
                           {index === 0 && <span className="text-2xl mr-2">🥇</span>}
@@ -182,13 +181,13 @@ function TestTakingDummy() {
                         </div>
                       </td>
                       <td className="py-4 px-4 font-medium">{getCandidateName(result.candidateId)}</td>
-                      <td className="py-4 px-4 text-gray-400">{getCandidateEmail(result.candidateId)}</td>
+                      <td className="py-4 px-4 text-gray-300">{getCandidateEmail(result.candidateId)}</td>
                       <td className="py-4 px-4 text-right">
-                        <span className="text-xl font-bold bg-gradient-to-r from-[#ff672f] to-[#ff4500] bg-clip-text text-transparent">
+                        <span className="text-xl font-bold bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] bg-clip-text text-transparent">
                           {result.score.toFixed(1)}%
                         </span>
                       </td>
-                      <td className="py-4 px-4 text-gray-400">
+                      <td className="py-4 px-4 text-gray-300">
                         {new Date(result.submittedAt).toLocaleDateString()} {new Date(result.submittedAt).toLocaleTimeString()}
                       </td>
                     </tr>
@@ -200,15 +199,15 @@ function TestTakingDummy() {
         </div>
 
         {/* Test Details */}
-        <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
+        <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
           <h2 className="text-2xl font-semibold mb-4">Test Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <div className="text-sm text-gray-400 mb-1">Prompt Budget</div>
+              <div className="text-sm text-gray-300 mb-1">Prompt Budget</div>
               <div className="text-lg font-semibold">{test.promptBudget.toLocaleString()}</div>
             </div>
             <div>
-              <div className="text-sm text-gray-400 mb-1">Rubrics Weightage</div>
+              <div className="text-sm text-gray-300 mb-1">Rubrics Weightage</div>
               <div className="space-y-1">
                 <div className="text-sm">Prompt Efficiency: {(test.rubrics.promptEfficiency * 100).toFixed(0)}%</div>
                 <div className="text-sm">Answer Accuracy: {(test.rubrics.answerAccuracy * 100).toFixed(0)}%</div>
@@ -217,14 +216,14 @@ function TestTakingDummy() {
             </div>
           </div>
           <div className="mt-6">
-            <div className="text-sm text-gray-400 mb-2">Questions ({test.questions.length})</div>
+            <div className="text-sm text-gray-300 mb-2">Questions ({test.questions.length})</div>
             <div className="space-y-3">
               {test.questions.map((q, idx) => (
-                <div key={idx} className="bg-black border border-gray-700 rounded-lg p-4">
-                  <div className="text-xs text-gray-400 mb-1">{q.type}</div>
+                <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-4">
+                  <div className="text-xs text-gray-300 mb-1">{q.type}</div>
                   <div className="font-medium mb-2">{q.question}</div>
                   {q.additionalConstraints && (
-                    <div className="text-sm text-gray-400">{q.additionalConstraints}</div>
+                    <div className="text-sm text-gray-300">{q.additionalConstraints}</div>
                   )}
                 </div>
               ))}
@@ -235,7 +234,7 @@ function TestTakingDummy() {
         {/* Add Candidates Modal */}
         {showAddCandidatesModal && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50 p-4"
             onClick={(e) => {
               // This logic for closing modal on backdrop click is correct
               if (e.target === e.currentTarget) {
@@ -246,14 +245,14 @@ function TestTakingDummy() {
             }}
           >
             <div 
-              className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] max-w-2xl w-full max-h-[80vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()} // This is also correct to prevent modal closing when clicking inside
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-semibold">Add Candidates</h3>
                 <button
                   onClick={closeAddCandidateModal} // <-- FIX: Simplified
-                  className="text-gray-400 hover:text-white"
+                  className="text-gray-300 hover:text-white"
                 >
                   ✕
                 </button>
@@ -264,7 +263,7 @@ function TestTakingDummy() {
                   .map((candidate) => (
                     <label
                       key={candidate.id}
-                      className="flex items-center p-3 bg-black border border-gray-700 rounded-lg cursor-pointer hover:border-[#ff672f] transition-colors"
+                      className="flex items-center p-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition-colors"
                     >
                       <input
                         type="checkbox"
@@ -276,11 +275,11 @@ function TestTakingDummy() {
                             setSelectedCandidateIds(selectedCandidateIds.filter(id => id !== candidate.id))
                           }
                         }}
-                        className="mr-3 w-4 h-4 text-[#ff672f] bg-black border-gray-700 rounded focus:ring-[#ff672f]"
+                        className="mr-3 w-4 h-4 text-[#ff2e2e] bg-white/10 border-white/20 rounded focus:ring-2 focus:ring-[#ff2e2e]"
                       />
                       <div>
                         <div className="text-white">{candidate.name}</div>
-                        <div className="text-sm text-gray-400">{candidate.email}</div>
+                        <div className="text-sm text-gray-300">{candidate.email}</div>
                       </div>
                     </label>
                   ))}
@@ -291,18 +290,17 @@ function TestTakingDummy() {
               <div className="flex justify-end space-x-3">
                 <button
                   onClick={closeAddCandidateModal} // <-- FIX: Simplified
-                  className="px-4 py-2 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+                  className="px-5 py-2 rounded-lg text-white font-medium bg-white/10 hover:bg-white/20 border border-white/10 transition-all duration-300"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleAddCandidates} // <-- FIX: Simplified
                   disabled={selectedCandidateIds.length === 0}
-                  className="px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2 rounded-lg text-white font-medium bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] shadow-[0_0_10px_rgba(255,0,106,0.4)] hover:shadow-[0_0_20px_rgba(255,0,106,0.7)] transition-all duration-300 border border-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     cursor: selectedCandidateIds.length === 0 ? 'not-allowed' : 'pointer',
                     pointerEvents: selectedCandidateIds.length === 0 ? 'none' : 'auto',
-                    backgroundImage: 'linear-gradient(to right, #ff672f, #ff4500)',
                     WebkitUserSelect: 'none',
                     userSelect: 'none'
                   }}
@@ -317,7 +315,7 @@ function TestTakingDummy() {
         {/* Edit Test Modal */}
         {showEditModal && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50 p-4"
             onClick={(e) => {
               // This logic is correct
               if (e.target === e.currentTarget) {
@@ -328,28 +326,27 @@ function TestTakingDummy() {
             }}
           >
             <div 
-              className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+              className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] max-w-2xl w-full max-h-[80vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()} // This is correct
             >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-2xl font-semibold">Edit Test</h3>
                 <button
                   onClick={() => setShowEditModal(false)} // <-- FIX: Simplified
-                  className="text-gray-400 hover:text-white"
+                  className="text-gray-300 hover:text-white"
                 >
                   ✕
                 </button>
               </div>
-              <div className="text-gray-400 mb-4">
+              <div className="text-gray-300 mb-4">
                 Note: Edit functionality is a placeholder. Replace with actual edit form when backend is ready.
               </div>
               <button
                 onClick={() => setShowEditModal(false)} // <-- FIX: Simplified
-                className="w-full px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full px-5 py-2 rounded-lg text-white font-medium bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] shadow-[0_0_10px_rgba(255,0,106,0.4)] hover:shadow-[0_0_20px_rgba(255,0,106,0.7)] transition-all duration-300 border border-white/10"
                 style={{
                   cursor: 'pointer',
                   pointerEvents: 'auto',
-                  backgroundImage: 'linear-gradient(to right, #ff672f, #ff4500)',
                   WebkitUserSelect: 'none',
                   userSelect: 'none'
                 }}
@@ -365,4 +362,3 @@ function TestTakingDummy() {
 }
 
 export default TestTakingDummy
-

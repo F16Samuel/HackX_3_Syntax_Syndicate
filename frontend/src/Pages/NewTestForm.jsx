@@ -153,43 +153,43 @@ function NewTestForm() {
   const totalWeight = Object.values(formData.rubrics).reduce((sum, val) => sum + val, 0)
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
+    <div className="min-h-screen text-white">
       <Navbar/>
-      <div className="max-w-4xl mx-auto pt-24">
+      <div className="w-full text-white px-8 py-10 pt-24 flex flex-col max-w-4xl mx-auto">
         <div className="flex items-center mb-8">
           <button
             onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
-            className="mr-4 text-gray-400 hover:text-white"
+            className="mr-4 text-gray-300 hover:text-white"
           >
             ← Back
           </button>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff672f] to-[#ff4500] bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] bg-clip-text text-transparent">
             Create New Test
           </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Test Title */}
-          <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
+          <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             <label className="block text-lg font-semibold mb-2">Test Title</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-              className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+              className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
               placeholder="Enter test title"
               required
             />
           </div>
 
           {/* Prompt Budget */}
-          <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
+          <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             <label className="block text-lg font-semibold mb-2">Prompt Budget</label>
             <input
               type="number"
               value={formData.promptBudget}
               onChange={(e) => setFormData((prev) => ({ ...prev, promptBudget: e.target.value }))}
-              className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+              className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
               placeholder="Enter prompt budget"
               min="1"
               required
@@ -197,7 +197,7 @@ function NewTestForm() {
           </div>
 
           {/* Rubrics */}
-          <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
+          <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             <div className="flex justify-between items-center mb-4">
               <label className="block text-lg font-semibold">Marking Rubrics Weightage</label>
               <span className={`text-sm ${Math.abs(totalWeight - 1) < 0.01 ? 'text-green-400' : 'text-red-400'}`}>
@@ -214,7 +214,7 @@ function NewTestForm() {
                   max="1"
                   value={formData.rubrics.promptEfficiency}
                   onChange={(e) => handleRubricChange('promptEfficiency', e.target.value)}
-                  className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+                  className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
                 />
               </div>
               <div>
@@ -226,7 +226,7 @@ function NewTestForm() {
                   max="1"
                   value={formData.rubrics.answerAccuracy}
                   onChange={(e) => handleRubricChange('answerAccuracy', e.target.value)}
-                  className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+                  className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
                 />
               </div>
               <div>
@@ -238,24 +238,23 @@ function NewTestForm() {
                   max="1"
                   value={formData.rubrics.creativityAndInnovation}
                   onChange={(e) => handleRubricChange('creativityAndInnovation', e.target.value)}
-                  className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+                  className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
                 />
               </div>
             </div>
           </div>
 
           {/* Questions */}
-          <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
+          <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             <div className="flex justify-between items-center mb-4">
               <label className="block text-lg font-semibold">Questions</label>
               <button
                 type="button"
                 onClick={addQuestion} // <-- FIX: Simplified
-                className="px-4 py-2 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                className="px-5 py-2 rounded-lg text-white text-sm font-medium bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] shadow-[0_0_10px_rgba(255,0,106,0.4)] hover:shadow-[0_0_20px_rgba(255,0,106,0.7)] transition-all duration-300 border border-white/10"
                 style={{
                   cursor: 'pointer',
                   pointerEvents: 'auto',
-                  backgroundImage: 'linear-gradient(to right, #ff672f, #ff4500)',
                   WebkitUserSelect: 'none',
                   userSelect: 'none'
                 }}
@@ -265,7 +264,7 @@ function NewTestForm() {
             </div>
             <div className="space-y-6">
               {formData.questions.map((question, index) => (
-                <div key={question.id} className="border border-gray-700 rounded-lg p-4">
+                <div key={question.id} className="border border-white/20 rounded-xl p-4">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-sm font-semibold text-gray-300">Question {index + 1}</span>
                     {formData.questions.length > 1 && (
@@ -284,10 +283,10 @@ function NewTestForm() {
                       <select
                         value={question.type}
                         onChange={(e) => updateQuestion(question.id, 'type', e.target.value)}
-                        className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+                        className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition appearance-none"
                       >
                         {QUESTION_TYPES.map(type => (
-                          <option key={type} value={type}>{type}</option>
+                          <option key={type} value={type} className="bg-black text-white">{type}</option>
                         ))}
                       </select>
                     </div>
@@ -296,7 +295,7 @@ function NewTestForm() {
                       <textarea
                         value={question.question}
                         onChange={(e) => updateQuestion(question.id, 'question', e.target.value)}
-                        className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+                        className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
                         rows="3"
                         placeholder="Enter the question"
                         required
@@ -307,7 +306,7 @@ function NewTestForm() {
                       <textarea
                         value={question.additionalConstraints}
                         onChange={(e) => updateQuestion(question.id, 'additionalConstraints', e.target.value)}
-                        className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:border-[#ff672f] focus:outline-none"
+                        className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#ff6b00]/50 backdrop-blur-sm transition"
                         rows="2"
                         placeholder="Enter any additional constraints"
                       />
@@ -319,29 +318,29 @@ function NewTestForm() {
           </div>
 
           {/* Candidates */}
-          <div className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-6">
+          <div className="bg-white/10 rounded-2xl border border-white/10 p-6 backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
             <label className="block text-lg font-semibold mb-4">Select Candidates</label>
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {candidates.map((candidate) => (
                 <label
                   key={candidate.id}
-                  className="flex items-center p-3 bg-black border border-gray-700 rounded-lg cursor-pointer hover:border-[#ff672f] transition-colors"
+                  className="flex items-center p-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition-colors"
                 >
                   <input
                     type="checkbox"
                     checked={formData.candidateIds.includes(candidate.id)}
                     onChange={() => toggleCandidate(candidate.id)}
-                    className="mr-3 w-4 h-4 text-[#ff672f] bg-black border-gray-700 rounded focus:ring-[#ff672f]"
+                    className="mr-3 w-4 h-4 text-[#ff2e2e] bg-white/10 border-white/20 rounded focus:ring-2 focus:ring-[#ff2e2e]"
                   />
                   <div>
                     <div className="text-white">{candidate.name}</div>
-                    <div className="text-sm text-gray-400">{candidate.email}</div>
+                    <div className="text-sm text-gray-300">{candidate.email}</div>
                   </div>
                 </label>
               ))}
             </div>
             {formData.candidateIds.length > 0 && (
-              <div className="mt-4 text-sm text-gray-400">
+              <div className="mt-4 text-sm text-gray-300">
                 {formData.candidateIds.length} candidate{formData.candidateIds.length !== 1 ? 's' : ''} selected
               </div>
             )}
@@ -352,7 +351,7 @@ function NewTestForm() {
             <button
               type="button"
               onClick={() => navigate('/recruiter-dummy')} // <-- FIX: Removed preventDefault/stopPropagation
-              className="px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+              className="px-6 py-3 rounded-lg text-white font-medium bg-white/10 hover:bg-white/20 border border-white/10 transition-all duration-300"
               style={{
                 cursor: 'pointer',
                 pointerEvents: 'auto',
@@ -365,11 +364,10 @@ function NewTestForm() {
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-3 bg-gradient-to-r from-[#ff672f] to-[#ff4500] text-white font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 rounded-lg text-white font-medium bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] shadow-[0_0_20px_rgba(255,0,106,0.5)] hover:shadow-[0_0_30px_rgba(255,0,106,0.8)] transition-all duration-300 border border-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 cursor: loading ? 'not-allowed' : 'pointer',
                 pointerEvents: loading ? 'none' : 'auto',
-                backgroundImage: 'linear-gradient(to right, #ff672f, #ff4500)',
                 WebkitUserSelect: 'none',
                 userSelect: 'none'
               }}

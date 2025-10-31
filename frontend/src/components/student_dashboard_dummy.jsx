@@ -3,6 +3,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { FiRadio, FiFilter, FiClock } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
+
 // Define filter categories
 const CATEGORY_FILTERS = ["All", "Aptitude Round", "DSA Round", "Interview"];
 const STATUS_FILTERS = [
@@ -16,25 +17,25 @@ const STATUS_FILTERS = [
 const mockRounds = [
   {
     _id: "1",
-    title: "Cognizant Aptitude Round",
+    title: "Cognizant GenC Aptitude",
     subtitle: "Aptitude Round: Quantitative & Logical Reasoning",
-    thumbnailUrl: "https://placehold.co/200x200/ff6b00/ffffff?text=Aptitude",
+    thumbnailUrl: "https://placehold.co/200x200/0033A0/ffffff?text=GenC", // Cognizant Blue
     role: "Software Engineer Trainee",
     whoCanPlay: "2025 Batch",
     dateTBA: false,
-    // LIVE ROUND (e.g., set to be live for 2 hours)
-    startDateTime: new Date(Date.now() - 60 * 60 * 1000).toISOString(), // Started 1 hour ago
-    endDateTime: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // Ends 1 hour from now
+    // LIVE ROUND (e.g., set to be live for 2 hours, started 30 mins ago)
+    startDateTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // Started 30 mins ago
+    endDateTime: new Date(Date.now() + 90 * 60 * 1000).toISOString(), // Ends 90 mins from now
     displayStartDate: "Oct 31, 2025",
-    displayStartTime: "03:00 AM",
+    displayStartTime: "05:00 AM", // Updated to reflect current time
     displayEndDate: "Oct 31, 2025",
-    displayEndTime: "05:00 AM",
+    displayEndTime: "07:00 AM",
   },
   {
     _id: "2",
-    title: "TCS DSA Round",
+    title: "TCS Ninja DSA Round",
     subtitle: "DSA Round: Arrays, Strings, and Algorithms",
-    thumbnailUrl: "https://placehold.co/200x200/ff2e2e/ffffff?text=DSA",
+    thumbnailUrl: "https://placehold.co/200x200/5F259F/ffffff?text=TCS", // TCS Purple
     role: "Backend Developer",
     whoCanPlay: "Everyone",
     dateTBA: false,
@@ -50,7 +51,7 @@ const mockRounds = [
     _id: "3",
     title: "Infosys HR Interview",
     subtitle: "Interview: Behavioral & Technical HR Round",
-    thumbnailUrl: "https://placehold.co/200x200/ff006a/ffffff?text=HR",
+    thumbnailUrl: "https://placehold.co/200x200/0078C1/ffffff?text=Infosys", // Infosys Blue
     role: "Full-Stack Developer",
     whoCanPlay: "Shortlisted Candidates",
     dateTBA: false,
@@ -64,9 +65,9 @@ const mockRounds = [
   },
   {
     _id: "4",
-    title: "Wipro Aptitude Challenge (Past)",
+    title: "Wipro Elite NTH (Past)",
     subtitle: "Aptitude Round: Verbal Ability & Logic",
-    thumbnailUrl: "https://placehold.co/200x200/1a1a1a/ffffff?text=Past",
+    thumbnailUrl: "https://placehold.co/200x200/00B5E2/ffffff?text=Wipro", // Wipro Blue
     role: "Graduate Engineer",
     whoCanPlay: "2024 Batch",
     dateTBA: false,
@@ -82,7 +83,7 @@ const mockRounds = [
     _id: "5",
     title: "Google Coding Challenge",
     subtitle: "DSA Round: Advanced Algorithms & Data Structures",
-    thumbnailUrl: "https://placehold.co/200x200/4285F4/ffffff?text=Coding",
+    thumbnailUrl: "https://placehold.co/200x200/4285F4/ffffff?text=Google", // Google Blue
     role: "SDE 1",
     whoCanPlay: "Everyone",
     dateTBA: false,
@@ -93,6 +94,54 @@ const mockRounds = [
     displayStartTime: "09:00 AM",
     displayEndDate: "Nov 5, 2025",
     displayEndTime: "11:00 AM",
+  },
+  {
+    _id: "6",
+    title: "HCL Tech-Bee Aptitude",
+    subtitle: "Aptitude Round: Basic Numeracy & English",
+    thumbnailUrl: "https://placehold.co/200x200/0068B4/ffffff?text=HCL", // HCL Blue
+    role: "Analyst",
+    whoCanPlay: "12th Pass Outs",
+    dateTBA: false,
+    // UPCOMING ROUND (e.g., starts in 3 days)
+    startDateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    endDateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000).toISOString(),
+    displayStartDate: "Nov 3, 2025",
+    displayStartTime: "11:00 AM",
+    displayEndDate: "Nov 3, 2025",
+    displayEndTime: "01:00 PM",
+  },
+  {
+    _id: "7",
+    title: "Flipkart GRID 5.0 DSA",
+    subtitle: "DSA Round: Dynamic Programming & Graphs",
+    thumbnailUrl: "https://placehold.co/200x200/00479A/ffffff?text=Flipkart", // Flipkart Blue
+    role: "SDE 1",
+    whoCanPlay: "2024 & 2025 Batch",
+    dateTBA: false,
+    // UPCOMING ROUND (e.g., starts in 7 days)
+    startDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    endDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000).toISOString(),
+    displayStartDate: "Nov 7, 2025",
+    displayStartTime: "06:00 PM",
+    displayEndDate: "Nov 7, 2025",
+    displayEndTime: "09:00 PM",
+  },
+  {
+    _id: "8",
+    title: "Tech Mahindra System Design (Past)",
+    subtitle: "System Design: LLD & HLD Concepts",
+    thumbnailUrl: "https://placehold.co/200x200/FF0000/ffffff?text=TechM", // TechM Red
+    role: "Senior Associate",
+    whoCanPlay: "Experienced Hiring",
+    dateTBA: false,
+    // PAST ROUND (e.g., ended 2 days ago)
+    startDateTime: new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString(),
+    endDateTime: new Date(Date.now() - 70 * 60 * 60 * 1000).toISOString(),
+    displayStartDate: "Oct 29, 2025",
+    displayStartTime: "10:00 AM",
+    displayEndDate: "Oct 29, 2025",
+    displayEndTime: "12:00 PM",
   },
 ];
 

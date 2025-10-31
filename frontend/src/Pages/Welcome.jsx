@@ -5,14 +5,16 @@ const Welcome = ({ onContinue }) => {
   const rightSectionRef = useRef(null);
 
   const handleContinue = () => {
+    // --- 1. DEFINE YOUR EXTERNAL URL HERE ---
+    // Replace this with the full website address you want to link to
+    const externalWebsiteUrl = "https://advent-hackx-sampletest.vercel.app/";
+
+    // Scroll the local section first
     if (rightSectionRef.current) {
       rightSectionRef.current.scrollBy({
         top: 180,
         behavior: "smooth",
       });
-    }
-    if (typeof onContinue === "function") {
-      setTimeout(() => onContinue(), 300);
     }
   };
 
@@ -49,6 +51,7 @@ const Welcome = ({ onContinue }) => {
         {/* Continue Button */}
         <div className="flex gap-4 mt-4">
           <button
+            onClick={handleContinue}
             className="px-6 py-3 rounded-lg text-white font-medium 
             bg-gradient-to-r from-[#ff6b00] via-[#ff2e2e] to-[#ff006a] 
             shadow-[0_0_20px_rgba(255,0,106,0.5)] 
