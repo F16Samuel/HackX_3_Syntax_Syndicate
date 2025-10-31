@@ -16,6 +16,9 @@ const Welcome = ({ onContinue }) => {
         behavior: "smooth",
       });
     }
+    setTimeout(() => {
+      window.location.href = externalWebsiteUrl;
+    }, 300);
   };
 
   return (
