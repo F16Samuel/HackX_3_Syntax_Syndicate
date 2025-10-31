@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Base colors - Pure black and dark greys */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Primary - Orange gradient accent */
+    --primary: 16 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 16 100% 50%;
+
+    /* Secondary - Dark grey */
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted - Darker grey with reduced opacity text */
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 65%;
+
+    /* Accent - Lighter grey for hover states */
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive - Red for warnings */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and inputs - Subtle dark grey */
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 16 100% 59%;
+
+    --radius: 0.5rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #ff672f 0%, #ff4500 100%);
+    --gradient-primary-hover: linear-gradient(135deg, #ff7a42 0%, #ff5a1a 100%);
+    
+    /* Shadows */
+    --shadow-glow: 0 0 20px hsl(16 100% 59% / 0.3);
+    --shadow-strong: 0 10px 40px hsl(16 100% 50% / 0.2);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
